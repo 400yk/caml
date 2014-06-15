@@ -1,5 +1,5 @@
 """
-Django settings for ejub project.
+Django settings for caml project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -35,7 +35,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ej',
+    'south',
+    'ca',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,9 +48,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'ejub.urls'
+ROOT_URLCONF = 'caml.urls'
 
-WSGI_APPLICATION = 'ejub.wsgi.application'
+WSGI_APPLICATION = 'caml.wsgi.application'
 
 
 # Database
@@ -58,7 +59,7 @@ WSGI_APPLICATION = 'ejub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test_ejub',
+        'NAME': 'test_caml',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
