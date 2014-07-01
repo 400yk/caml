@@ -1,5 +1,6 @@
 # TODO: Add foreign key relationship from program to university
 from django.db import models
+from django.contrib.auth.models import User # Use Django built in User model, the additional fields are stored in UserProfile class
 ''' User table:
     Profile/Password editor
     Favourite programs
@@ -11,7 +12,6 @@ from django.db import models
     Scheduled calendar
 '''
 class Question(models.Model):
-    question_id = models.IntegerField(primary_key = True)
     question = models.TextField(blank = True)
     
     def __unicode__(self):
@@ -19,7 +19,6 @@ class Question(models.Model):
 
 # A table recording the purchase for a user and how many hours of consulting has been used
 class Package(models.Model):
-    package_id = models.IntegerField(primary_key = True)
     package_name = models.CharField(max_length = 255, blank = True)
     price = models.DecimalField(max_digits = 19, decimal_places = 5, blank = True, null = True) # Original price for each package, maybe overwritten by any promotion
     freq = models.CharField(max_length = 31, blank = True) # Hourly, each time, one time, Daily, Weekly, Monthly, Quarterly, Annually
@@ -39,7 +38,6 @@ class University(models.Model):
         return self.name
 
 class Program(models.Model):
-    program_id = models.IntegerField(primary_key = True)
     program_category = models.CharField(max_length = 255, blank = True)
     university = models.CharField(max_length = 255, blank = True)
     name = models.CharField(max_length = 255, blank = True)
@@ -83,51 +81,44 @@ class Program(models.Model):
     def __unicode__(self):
         return self.name
 
-class User(models.Model):
-    user_id = models.IntegerField(primary_key = True)
-    user_name = models.CharField(max_length = 63)
-    password = models.CharField(max_length = 63)
-    email = models.EmailField()
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
     phone = models.IntegerField(max_length = 31, blank = True, null = True)
     skype_id = models.CharField(max_length = 63, blank = True)
     qq_id = models.CharField(max_length = 63, blank = True)
+    picture = models.ImageField(upload_to = "profile_images", blank = True)
     fav_program = models.ManyToManyField(Program) # Favorite program 
     fav_university = models.ManyToManyField(University) # Favorite School    
     packages = models.ManyToManyField(Package, through = 'Tracking')
-
     def __unicode__(self):
-        return self.user_name
+        return self.user.username
 
 # One user can have multiple resumes
 class Resume(models.Model):
-    resume_id = models.IntegerField(primary_key = True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserProfile)
     content = models.TextField(null = True, blank = True)
 
 # Personal Statement
 class PS(models.Model):
-    ps_id = models.IntegerField(primary_key = True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserProfile)
     title = models.TextField(null = True, blank = True)
     content = models.TextField(null = True, blank = True)
 
 # Letter of Recommendation
 class LOR(models.Model):
-    lor_id = models.IntegerField(primary_key = True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserProfile)
     content = models.TextField(null = True, blank = True)
 
 # Brain Storming questions, this table contains each user's response to 
 # each question that applies to that user (question_id isn't unique)
 class BS(models.Model):
-   bs_id = models.IntegerField(primary_key = True)
    question_id = models.ForeignKey(Question)
-   user_id = models.ForeignKey(User)
+   user_id = models.ForeignKey(UserProfile)
    answer = models.TextField(null = True, blank = True)
 
 class Tracking(models.Model):
     package = models.ForeignKey(Package)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(UserProfile)
     total = models.IntegerField(blank = True, null = True)
     remaining = models.IntegerField(blank = True, null = True)
     unit = models.CharField(max_length = 31, blank = True)

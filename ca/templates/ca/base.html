@@ -22,7 +22,13 @@
 
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
-                            <li><a href="www.google.com">Google</a></li>
+                            {% if user.is_authenticated %}
+                            <li class="navbar-text"><a href="{% url 'ca:profile' %}">{{ user.username }}</a></li>
+                            <li><a href="{% url 'ca:logout' %}">Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'ca:register'  %}">Register</a></li>
+                            <li><a href="{% url 'ca:login' %}">Login</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

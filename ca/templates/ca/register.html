@@ -1,0 +1,18 @@
+{% extends 'ca/base.html' %}
+{% load static %}
+{% block body %}
+<h1>Register with CAML</h1>
+<div class="container">
+    {% if registered %}
+    <strong>Thank you for registering</strong>
+    {% else %}
+    <form class="form-signin span4" id="user_register_form" method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p}}
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
+
