@@ -2,7 +2,12 @@
 {% load static %}
 {% block body %}
 <div class="hero-unit">
-    <h1>Test home page</h1>
+    <h1>CA Moonlight</h1>
+</div>
+<div class="container">
+    <legend>Browse Programs</legend>
+    <input type="text" class="input-long search-query" size="50" name="query-program-name" id="query-program-name" placeholder="Search by name"/>
+    <div id="program_suggestions"></div>
 </div>
 
 {% endblock %}

@@ -25,6 +25,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Tell Django about the profile object
+AUTH_PROFILE_MODULE = "ca.UserProfile"
 
 # Application definition
 
@@ -85,3 +87,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'ca/media/').replace('\\','/')
+MEDIA_URL = '/media/'

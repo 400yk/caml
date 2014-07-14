@@ -6,10 +6,10 @@
     {% if registered %}
     <strong>Thank you for registering</strong>
     {% else %}
-    <form class="form-signin span4" id="user_register_form" method="post">
+    <form class="form-signin span4" id="user_register_form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form.as_p }}
-        {{ profile_form.as_p}}
+        {{ profile_form.as_p }}
         <button class="btn btn-primary" type="submit">Register</button>
     </form>
     {% endif %}

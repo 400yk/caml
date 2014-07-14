@@ -1,5 +1,41 @@
 {% extends 'ca/base.html' %}
 {% load static %}
 {% block body %}
-<h1>Your profile</h1>
+{% if profile %}
+<h1>Your profile</h1><a href="{% url 'ca:edit_profile' %}" class="btn btn-primary" id="edit_profile_button">Edit</a>
+<form class="form-signin span4" method="post" id="profile_form">
+    {% csrf_token %}
+    <h1>{{ user.username }}</h1>
+    <img src="{{ MEDIA_URL }}{{ profile.picture }}" alt="Image"/>
+    <h4>Package Subscription</h4>
+    {% if profile.packages %}
+    <ul>
+        {% for package in profile.packages.all %}
+        <li>{{ package.package_name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h4>Favorite Programs</h4>
+    {% if profile.fav_program %}
+    <ul>
+        {% for program in profile.fav_program.all %}
+        <li>{{ program.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h4>Favorite University</h4>
+    {{ profile.fav_university.all }}
+    <h4>Phone Number:</h4>
+    {{ profile.phone }}
+    <br/>
+    <h4>Skype ID:</h4>
+    {{ profile.skype_id }}
+    <br/>
+    <h4>QQ ID:</h4>
+    {{ profile.qq_id }}
+    <br/>
+</form>
+{% else %}
+<h1>Your user profile does not exist!</h1>
+{% endif %}
 {% endblock %}

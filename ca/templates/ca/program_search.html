@@ -1,0 +1,10 @@
+{% if program_list %}
+<h2>Suggested programs</h2>
+<ul id="program-list">
+    {% for program in program_list %}
+    <li>{{ program.name }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<strong>No programs match your search criteria.</strong>
+{% endif %}

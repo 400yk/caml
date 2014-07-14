@@ -81,12 +81,17 @@ class Program(models.Model):
     def __unicode__(self):
         return self.name
 
+# Helper function
+def profile_image_path(instance, filename):
+    return '/'.join(['profile_images/', instance.user.username, filename])
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     phone = models.IntegerField(max_length = 31, blank = True, null = True)
     skype_id = models.CharField(max_length = 63, blank = True)
     qq_id = models.CharField(max_length = 63, blank = True)
-    picture = models.ImageField(upload_to = "profile_images", blank = True)
+    picture = models.ImageField(upload_to = profile_image_path, blank = True)
     fav_program = models.ManyToManyField(Program) # Favorite program 
     fav_university = models.ManyToManyField(University) # Favorite School    
     packages = models.ManyToManyField(Package, through = 'Tracking')
@@ -122,6 +127,9 @@ class Tracking(models.Model):
     total = models.IntegerField(blank = True, null = True)
     remaining = models.IntegerField(blank = True, null = True)
     unit = models.CharField(max_length = 31, blank = True)
+
+    def __unicode__(self):
+        return 'Package: ' + self.package.package_name + '. User: ' + self.user.user.username
 
 class Calendar(models.Model):
     pass

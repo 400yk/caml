@@ -1,0 +1,53 @@
+{% extends 'ca/base.html' %}
+{% load static %}
+{% block body %}
+<h2>Edit Profile</h2>
+<form id="edit_profile_form" method="post" >
+    {% csrf_token %}
+    {{ edituser.id }}
+    {{ editprofile.id }}
+    <legend>Personal Information</legend>
+    {% if profile %}
+    <ul>
+        <li>
+        <label>User Name</label>
+        {{ edituser.username }}</li>
+        <li>
+        <label>Password</label>
+        {{ edituser.password }}</li>
+        <li>
+        <label>Confirm password</label>
+        {{ edituser.password_con }}</li>
+        <li>
+        <label>Email</label>
+        {{ edituser.email }}</li>
+        <li>
+        <label>Picture</label>
+        <img src="{{ MEDIA_URL }}{{ editprofile.picture }}" alt="Image"/></li>
+        <li>
+        <label>Phone</label>
+        {{ editprofile.phone }}
+        </li>
+        <li>
+        <label>Skype ID</label>
+        {{ editprofile.skype_id }}
+        </li>
+        <li>
+        <label>QQ ID</label>
+        {{ editprofile.qq_id }}
+        </li>
+    </ul>
+    <legend>Preferences</legend>
+    <ul>
+        <li>
+        <label>Favorite Program(s):</label>
+        {{ editprofile.fav_program }}
+        </li>
+    </ul>
+    <legend>Current subscription</legend>
+    <label>Service Package:</legend>
+        {{ editprofile.packages }}
+    {% endif %}
+    <button class="btn btn-primary" type="submit">Save Profile</button>
+</form>
+{% endblock %}
