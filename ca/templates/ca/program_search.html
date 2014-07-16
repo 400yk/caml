@@ -1,8 +1,8 @@
 {% if program_list %}
-<h2>Suggested programs</h2>
+<h4>List of programs</h4>
 <ul id="program-list">
     {% for program in program_list %}
-    <li>{{ program.name }}</li>
+    <li><a href="{% url 'ca:program_detail' program.id %}" program_id="{{ program.id }}"> {{ program.name }}</a></li>
     {% endfor %}
 </ul>
 {% else %}

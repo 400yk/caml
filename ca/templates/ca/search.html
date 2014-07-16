@@ -1,0 +1,34 @@
+{% extends 'ca/base.html' %}
+{% load static %}
+{% block body %}
+<div class="container-fluid">
+    <div class="column-fluid">
+        <div class="span6">
+            <legend>Browse Programs
+                <input type="text" style="float:right" class="input-long search-query" size="50" name="query-program-name" id="query-program-name" placeholder="Search by name"/>
+            </legend>
+            <div class="column-fluid">
+                <div class="span4">
+                    <div id="program_categories" class="well sidebar-nav">
+                        <ul class="nav nav-list">
+                            <li class="nav-header" id="category-trigger">Categories</li>
+                            <li class="program-search-category" thefield="degree">Degree</li>
+                            <li class="program-search-category" thefield="major">Major</li>
+                            <li class="program-search-category" thefield="academic_professional">Academic/Professional</li>
+                            <li class="program-search-category" thefield="university">University</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="span8">
+                    <div id="program_suggestions"></div>
+                </div>
+            </div>
+            </div>
+            <div class="span6">
+                <legend> Browse Universities
+                    <input type="text" style="float:right" class="input-long search-query" size="50" name="query-program-university" id="query-program-university" placeholder="Search by university"/>
+                </legend>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

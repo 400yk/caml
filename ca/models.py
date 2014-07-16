@@ -81,6 +81,9 @@ class Program(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Program._meta.fields]
+
 # Helper function
 def profile_image_path(instance, filename):
     return '/'.join(['profile_images/', instance.user.username, filename])

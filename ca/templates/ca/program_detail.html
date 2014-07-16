@@ -1,0 +1,15 @@
+{% extends 'ca/base.html' %}
+{% load static %}
+{% block body %}
+{% if program %}
+<div class="hero-unit">{{ program.name }},&nbsp; {{ program.university }}</div>
+<ul>
+    {% for name, value in program.get_fields %}
+    <li>
+    <legend>{{ name }}</legend>
+    {{ value }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

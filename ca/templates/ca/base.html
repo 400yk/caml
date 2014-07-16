@@ -19,11 +19,16 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="brand" href="{% url 'ca:home' %}">CAML</a>
-
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-left">
+                            <li><a  href="{% url 'ca:articles' %}">Articles</a></li>
+                            <li><a href="{% url 'ca:search' %}">Search</a></li>
+                        </ul>
+                    </div>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             {% if user.is_authenticated %}
-                            <li class="navbar-text"><a href="{% url 'ca:profile' %}">{{ user.username }}</a></li>
+                            <li><a href="{% url 'ca:profile' %}">{{ user.username }}</a></li>
                             <li><a href="{% url 'ca:logout' %}">Logout</a></li>
                             {% else %}
                             <li><a href="{% url 'ca:register'  %}">Register</a></li>
@@ -37,16 +42,7 @@
 
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span2">
-                    <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
-                            <li class="nav-header">Quick Navigation</li>
-                        </ul>
-                        <div></div>
-                    </div>
-                </div>
-
-                <div class="span10">
+                <div class="span12">
                     {% block body %}{% endblock %}
                 </div>
             </div>

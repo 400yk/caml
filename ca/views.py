@@ -6,6 +6,11 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from ca.models import UserProfile, Program, Package, Tracking
 from ca.forms import UserProfileForm, UserForm
+from django.views import generic
+import json
+
+# Global constant
+MAX_PROGRAM = 10 # Max number of programs that can be shown in the result list
 
 def home(request):
     context = RequestContext(request)
@@ -119,7 +124,8 @@ def edit_profile(request):
         pass 
 
 # Helper function for program_search()
-def search_program(max_program = 0, starts_with = {}):
+# TODO: delete duplicate search, add second category
+def search_program(starts_with = {}):
     program_list = []
     if starts_with:
         filterargs = {}
@@ -134,10 +140,6 @@ def search_program(max_program = 0, starts_with = {}):
             program_list = Program.objects.all()
     else:
         program_list = Program.objects.all()
-
-    if max_program > 0:
-        if len(program_list) > max_program:
-            program_list = program_list[:max_program]
 
     return program_list
 
@@ -154,5 +156,38 @@ def program_search(request):
         for field in field_list:
             starts_with[field] = request.POST['search_' + field]
 
-    program_list = search_program(10, starts_with)
-    return render_to_response('ca/program_search.html', {'program_list': program_list}, context)
+    program_list = search_program(starts_with)
+    # Limit the number of program to be rendered to HTML
+    if MAX_PROGRAM > 0:
+        if len(program_list) > MAX_PROGRAM:
+            limit_program_list = program_list[:MAX_PROGRAM]
+        else:
+            limit_program_list = program_list
+
+    # Save the whole resulted program_list to session, to be used by categories for subsetting
+    # First convert to JSON object
+
+    # Get the categories
+    # max number of sub-categories that can be shown
+    max_counts = 6
+    top_counts = []
+
+    return render_to_response('ca/program_search.html', {'program_list': limit_program_list}, context)
+
+@login_required
+def program_detail(request, program_id):
+    context = RequestContext(request)
+    if program_id:
+        program = Program.objects.get(pk = program_id)
+    return render_to_response('ca/program_detail.html', {
+        'program': program,
+        }, context)
+
+# Simple view of one article
+def articles(request):
+    context = RequestContext(request)
+    return render_to_response('ca/articles.html', context)
+
+def search(request):
+    context = RequestContext(request)
+    return render_to_response('ca/search.html', context)
